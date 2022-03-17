@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Sale\SaleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,12 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', [SaleController::class, 'index'])->name('dashboard');
+
+    Route::get('/import', [SaleController::class, 'index'])->name('dashboard');
+    Route::post('/import', [SaleController::class, 'store'])->name('import.store');
+    Route::delete('/delete', [SaleController::class, 'destroy'])->name('sale.destroy');
+    // Route::get('export', [SubscriberCtrl::class, 'export'])->name('export');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('sales.index');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

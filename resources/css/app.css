@@ -1,3 +1,10 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.text-euro-one {
+    color: #003A40;
+}
+.bg-euro-one{
+    background-color: #144046;
+}
