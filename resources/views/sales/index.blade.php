@@ -1,14 +1,13 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
     @if (session()->has('message'))
-        <div class="mt-3 bg-green-400 rounded-md px-2 py-2">
+        <div class="w-full px-2 py-4 border border-green-500 bg-green-400 text-white rounded mt-3 mb-1">
             {{ session('message') }}
         </div>
     @endif
     <div class="mt-4">
-        <form action="{{ route('import.store') }}" method="POST" enctype="multipart/form-data"
-            class="flex items-center">
+        <form action="{{ route('import.store') }}" method="POST" enctype="multipart/form-data" class="items-center">
             @csrf
-            <div class="flex w-full items-center justify-start bg-grey-lighter">
+            <div class="flex md:flex-col w-full items-center justify-start bg-grey-lighter">
                 <label
                     class="flex items-center px-2 py-1 bg-white text-euro-one font-semibold rounded-lg shadow-lg tracking-wide uppercase border cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 m-2" viewBox="0 0 20 20"
@@ -17,20 +16,26 @@
                             d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
                         <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                     </svg>
-                    <input type="file" name="csv" placeholder="CSV File"
+                    <input id="csv" type="file" name="csv" placeholder="Arquivo"
                         class="block w-full text-sm text-slate-500 cursor-pointer
       file:mr-4 file:py-2 file:px-4
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
-      file:bg-white file:text-euro-one" />
+      file:bg-white file:text-euro-one @error('csv') is-invalid @enderror" required>
+
+                    @error('csv')
+                        <span class="w-full px-2 py-4 border border-red-500 bg-red-400 text-white rounded mt-3 mb-1" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </label>
 
-                <button type="submit" class="ml-5 px-5 py-2 rounded-md bg-euro-one text-white font-semibold">
+                <button type="submit"
+                    class="ml-5 px-5 py-2 md:px-3 md:py-2 rounded-md bg-euro-one text-white font-semibold">
                     Cadastrar Venda
                 </button>
             </div>
         </form>
-
     </div>
 
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -111,5 +116,5 @@
             </table>
         </div>
     </div>
-</div>
+    {{ $records->links() }}
 </div>

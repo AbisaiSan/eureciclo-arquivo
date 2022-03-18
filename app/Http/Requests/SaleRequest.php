@@ -24,12 +24,16 @@ class SaleRequest extends FormRequest
     public function rules()
     {
         return [
-            'buyer' => 'required',
-            'description' => 'required',
-            'unit_price' => 'required',
-            'quantity' => 'required',
-            'address' => 'required',
-            'supplier' => 'required',
+            'csv' => 'required|file'
+        ];
+    }
+    public function messages()
+    {
+        return  [
+            'csv.required' => 'Este campo título é obrigatório',
+            'required'       => 'Este campo é obrigatório',
+            'min'            => 'Este campo não atinge o mínimo de caracteres permitidos. Tamanho mínimo permitido :min',
+            'image'          => 'Arquivo de imagem inválido!'
         ];
     }
 }
