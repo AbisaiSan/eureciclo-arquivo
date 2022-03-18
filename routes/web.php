@@ -18,8 +18,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', [SaleController::class, 'index'])->name('dashboard');
 
     Route::get('/import', [SaleController::class, 'index'])->name('dashboard');
-    Route::post('/import', [SaleController::class, 'store'])->name('import.store');
-    Route::delete('/delete', [SaleController::class, 'destroy'])->name('sale.destroy');
+    Route::post('/import/create', [SaleController::class, 'store'])->name('import.store');
+    Route::delete('/delete{sale}', [SaleController::class, 'destroy'])->name('sale.destroy');
     // Route::get('export', [SubscriberCtrl::class, 'export'])->name('export');
 });
 

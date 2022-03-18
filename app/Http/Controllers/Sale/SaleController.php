@@ -17,7 +17,7 @@ class SaleController extends Controller
     public function index()
     {
         $data = [];
-        $data['records'] = Sale::latest()->paginate(20);
+        $data['records'] = Sale::orderBy('id', 'ASC')->paginate(4);
         return view('dashboard')->with($data);
     }
 
@@ -29,35 +29,32 @@ class SaleController extends Controller
      */
     public function store(SaleRequest $request)
     {
+
         $request->validate([
-            'csv' => 'required',
+            'csv' => 'required|file',
         ]);
 
-        $input = $request->all();
-
         if ($csv = $request->file('csv')) {
-            $csvDestinationPath = 'uploads/';
-            $postCsv = date('YmdHis') . "." . $csv->getClientOriginalExtension();
-            $csv->move($csvDestinationPath, $postCsv);
-            $csvPath = $csvDestinationPath . $postCsv;
+            $fileDestionationPath = 'uploads/';
+            $filecsv  = date('YmdHis') . "." . $csv->getClientOriginalExtension();
+            $csv->move($fileDestionationPath, $filecsv );
+            $filePath = $fileDestionationPath . $filecsv ;
 
-            $users = $this->validateToArrayFile($csvPath);
+            $sales = $this->validateToArrayFile($filePath);
 
-            foreach ($users as $user) {
+            foreach ($sales as $sale) {
 
-                $user = [
-                    'buyer' => $user['Comprador'],
-                    'description' => $user['Descrição'],
-                    'unit_price' => $user['Preço Unitário'],
-                    'quantity' => $user['Quantidade'],
-                    'address' => $user['Endereco'],
-                    'supplier' => $user['Fornecedor']
+                $sale = [
+                    'buyer' => $sale['Comprador'],
+                    'description' => $sale['Descrição'],
+                    'unit_price' => $sale['Preço Unitário'],
+                    'quantity' => $sale['Quantidade'],
+                    'address' => $sale['Endereco'],
+                    'supplier' => $sale['Fornecedor']
                 ];
-                Sale::create($user);
+                Sale::create($sale);
             }
-
-            return redirect()->route('dashboard')->with('message', 'Arquivo de venda cadastrado com sucesso');
-
+            return redirect()->back()->with('message', 'Arquivo de venda cadastrado com sucesso');
         }
     }
 
@@ -88,9 +85,9 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SaleRequest $request)
+    public function destroy(Sale $sale)
     {
-        $request->delete();
+        $sale->delete();
 
         return redirect()->route('dashboard')->with('message', "Registro de venda excluído com sucesso!");
     }
