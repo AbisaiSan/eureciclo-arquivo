@@ -7,7 +7,7 @@
     <div class="mt-4">
         <form action="{{ route('import.store') }}" method="POST" enctype="multipart/form-data" class="items-center">
             @csrf
-            <div class="flex md:flex-col w-full items-center justify-start bg-grey-lighter">
+            <div class="flex w-full items-center justify-start bg-grey-lighter">
                 <label
                     class="flex items-center px-2 py-1 bg-white text-euro-one font-semibold rounded-lg shadow-lg tracking-wide uppercase border cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 m-2" viewBox="0 0 20 20"
@@ -102,11 +102,17 @@
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ $record->supplier }}</p>
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm cursor-pointer">
                                 <form method="POST" action="{{ route('sale.destroy', $record->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="bg-red-600">Excluir</button>
+                                    <button type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+</svg>
+                                    </button>
+                                    
+                                   
                                 </form>
                             </td>
 
