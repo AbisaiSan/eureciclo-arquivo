@@ -30,7 +30,7 @@ class SaleController extends Controller
     public function store(SaleRequest $request)
     {
 
-        $request->validate([
+        $request->validated([
             'csv' => 'required|file',
         ]);
 
