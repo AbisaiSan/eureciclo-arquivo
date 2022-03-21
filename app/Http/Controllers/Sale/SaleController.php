@@ -31,7 +31,7 @@ class SaleController extends Controller
     {
 
         $request->validated([
-            'csv' => 'required|file',
+            'csv' => 'required',
         ]);
 
         if ($csv = $request->file('csv')) {
